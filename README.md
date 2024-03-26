@@ -1,2 +1,2 @@
-# wordpress-theme-vue
-A base Vue.js theme for WordPress.
+# WordPress - Vue.js
+A example base Vue.js theme for WordPress.
