@@ -3,7 +3,7 @@ Project: [Part 1](https://github.com/dark-kitt/wordpress-boilerplate/tree/main),
 
 ---
 
-A example base Vue.js theme for WordPress.
+Example base Vue.js theme for WordPress.
 
 ---
 
