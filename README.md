@@ -7,4 +7,4 @@ Example base Vue.js theme for WordPress.
 
 ---
 
-... comming soon
+... coming soon
