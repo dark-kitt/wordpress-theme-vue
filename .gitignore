@@ -1,5 +1,15 @@
 # files
 .DS_Store
+.env
+.example.env
 
 # folders
 node_modlues
+
+# WordPress
+example.functions.php
+functions.php
+header.php
+index.php
+footer.php
+style.css
