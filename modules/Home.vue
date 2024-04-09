@@ -15,7 +15,7 @@ withDefaults(defineProps<Props>(), {
   text: 'My test text.'
 });
 
-console.log('inside App.vue', Button);
+console.log('process.env', process.env);
 </script>
 
 <style lang="scss">

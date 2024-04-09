@@ -1,5 +1,5 @@
 import { resolve } from 'path';
-import { DefinePlugin, ProvidePlugin } from 'webpack';
+import { DefinePlugin } from 'webpack';
 
 import { VueLoaderPlugin } from 'vue-loader';
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
@@ -12,10 +12,11 @@ const plugins = [
   new VueLoaderPlugin(),
   new MiniCssExtractPlugin({
     filename: devMode ? 'css/[name].bundle.css' : 'css/[name].[contenthash].bundle.min.css',
-    chunkFilename: devMode ? 'css/chunk/[name].bundle.css' : 'css/chunk/[name].[contenthash].bundle.min.css'
+    chunkFilename: devMode
+      ? 'css/chunk/[name].bundle.css'
+      : 'css/chunk/[name].[contenthash].bundle.min.css'
   }),
-  new DefinePlugin(env),
-  new ProvidePlugin({ Vue: ['vue'] }),
+  new DefinePlugin({ ...env, 'process.env': JSON.stringify(env) }),
   new WebpackAssetsManifest({
     entrypoints: true,
     entrypointsUseAssets: true,

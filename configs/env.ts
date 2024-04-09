@@ -23,7 +23,8 @@ process.argv.forEach((val, key) => {
    * --------------------------------
    */
   if (key === 0 || key === 1) {
-    argv[key === 0 ? 'nodePath' : 'filePath'] = val;
+    // TODO: check if necessary
+    // argv[key === 0 ? 'nodePath' : 'filePath'] = val;
     return true;
   }
   return Object.assign(argv, {
@@ -50,7 +51,7 @@ const env: Env = {
   ...argv
 };
 /** string to boolean */
-for (let key in env) {
+for (const key in env) {
   if (Object.hasOwnProperty.call(env, key)) {
     if (env[key] === 'true') env[key] = true;
     if (env[key] === 'false') env[key] = false;
