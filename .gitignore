@@ -1,11 +1,13 @@
 # files
 .DS_Store
 .env
-.example.env
-
-# folders
-node_modlues
-
+# node
+node_modules
+# typescript
+@types/*
+!@types/shims-vue.d.ts
+# output
+www
 # WordPress
 example.functions.php
 functions.php

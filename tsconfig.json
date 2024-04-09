@@ -1,0 +1,44 @@
+{
+  "compilerOptions": {
+    /** vue 3 cli setup */
+    "composite": true,
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    /** webpack: https://webpack.js.org/configuration/configuration-languages/#typescript */
+    "allowSyntheticDefaultImports": true,
+    "esModuleInterop": true,
+    /** custom */
+    "module": "NodeNext",
+    "moduleResolution": "NodeNext",
+    "baseUrl": ".",
+    "outDir": "@types",
+    "paths": {
+      "@scripts/*": [
+        "scripts/*"
+      ],
+      "@modules/*": [
+        "modules/*"
+      ],
+      "@components/*": [
+        "modules/components/*"
+      ]
+    },
+    "lib": [
+      "ESNext",
+      "DOM"
+    ],
+    "types": ["node"]
+  },
+  "include": [
+    "*.ts",
+    "configs/**/*.ts",
+    "modules/**/*.vue",
+    "@types/shims-vue.d.ts"
+  ],
+  "exclude": ["www", "node_modules"],
+  /** webpack */
+  "ts-node": {
+    "compilerOptions": {
+      "module": "CommonJS"
+    }
+  }
+}

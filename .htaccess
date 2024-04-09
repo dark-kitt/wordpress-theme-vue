@@ -1,0 +1,17 @@
+# Redirect all request to index.php
+<IfModule mod_rewrite.c>
+
+  RewriteEngine On
+  RewriteBase /
+
+  RewriteCond %{HTTP_HOST} ^\.(.*?)$ [NC]
+  RewriteRule ^(.*?)$ %{REQUEST_SCHEME}://%1/$1 [R=301,NE,L]
+
+  RewriteRule ^\.php$ - [L]
+
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  RewriteRule . /index.php [L]
+
+</IfModule>

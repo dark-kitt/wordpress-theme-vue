@@ -1,0 +1,49 @@
+{
+  "name": "wordpress-theme-vue",
+  "version": "1.0.0",
+  "description": "An example base Vue.js theme for WordPress",
+  "main": "main.ts",
+  "repository": "https://github.com/dark-kitt/wordpress-theme-vue.git",
+  "author": "dark-kitt <42038118+dark-kitt@users.noreply.github.com>",
+  "license": "MIT",
+  "scripts": {
+    "dev": "webpack --config ./configs/webpack.ts",
+    "prod": "webpack --config ./configs/webpack.ts --env WEBPACK_MODE=production"
+  },
+  "browserslist": [
+    "defaults"
+  ],
+  "dependencies": {
+    "typescript": "^5.4.4",
+    "vue": "^3.4.21",
+    "vuex": "^4.0.2"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.24.4",
+    "@babel/preset-env": "^7.24.4",
+    "@types/node": "^20.12.5",
+    "@types/webpack": "^5.28.5",
+    "@typescript-eslint/parser": "^7.5.0",
+    "@vue/eslint-config-typescript": "^13.0.0",
+    "autoprefixer": "^10.4.19",
+    "babel-loader": "^9.1.3",
+    "css-loader": "^7.0.0",
+    "css-minimizer-webpack-plugin": "^6.0.0",
+    "dotenv": "^16.4.5",
+    "eslint": "^8.13.0",
+    "eslint-plugin-vue": "^9.24.0",
+    "mini-css-extract-plugin": "^2.8.1",
+    "postcss-loader": "^8.1.1",
+    "prettier": "^3.2.5",
+    "sass": "^1.74.1",
+    "sass-loader": "^14.1.1",
+    "terser-webpack-plugin": "^5.3.10",
+    "ts-loader": "^9.5.1",
+    "ts-node": "^10.9.2",
+    "vue-eslint-parser": "^9.4.2",
+    "vue-loader": "^17.4.2",
+    "webpack": "^5.91.0",
+    "webpack-assets-manifest": "^5.2.1",
+    "webpack-cli": "^5.1.4"
+  }
+}
