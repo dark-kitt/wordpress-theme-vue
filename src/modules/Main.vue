@@ -5,12 +5,12 @@
 </template>
 
 <script setup lang="ts">
+import { onBeforeMount } from 'vue';
 import { useStore } from '@store';
+
 import Button from '@components/Button.vue';
 
 const store = useStore();
-// store test
-console.log('api state', store.state.api);
 
 interface Props {
   text?: string;
@@ -19,8 +19,17 @@ interface Props {
 withDefaults(defineProps<Props>(), {
   text: 'My test text.'
 });
-// test access to env
-console.log('process.env', process.env);
+
+onBeforeMount(async () => {
+  // store token
+  const tokenStored = await store.dispatch('api/fetchToken');
+  if (tokenStored) {
+    // fetch data
+    const data = await store.dispatch('api/fetchData', 'posts');
+    // fetch data example
+    console.log('default data:', data);
+  }
+});
 </script>
 
 <style lang="scss">

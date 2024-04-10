@@ -1,4 +1,4 @@
-const setToken = (state, { token }) => {
+const setToken = (state, token) => {
   state.token = token;
 };
 

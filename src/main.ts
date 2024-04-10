@@ -1,9 +1,8 @@
 import { createApp } from 'vue';
 import { store, key } from '@store';
 
-import Home from '@modules/Home.vue';
-
-const theme = createApp(Home);
+import Main from '@modules/Main.vue';
+const theme = createApp(Main);
 // register Vuex store
 theme.use(store, key);
 
