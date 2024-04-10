@@ -10,7 +10,7 @@ import env from './env';
 const devMode = env.WEBPACK_MODE === 'development';
 const config: Configuration = {
   mode: env.WEBPACK_MODE,
-  entry: ['./main.ts', './styles/main.scss'],
+  entry: ['./src/main.ts', './src/styles/main.scss'],
   output: {
     clean: true,
     publicPath: '/',
@@ -19,24 +19,24 @@ const config: Configuration = {
   },
   resolve: {
     alias: {
-      '@modules': resolve(__dirname, '..', 'modules'),
-      '@components': resolve(__dirname, '..', 'modules', 'components'),
-      '@scripts': resolve(__dirname, '..', 'scripts'),
-      '@styles': resolve(__dirname, '..', 'styles'),
-      '@assets': resolve(__dirname, '..', 'assets'),
-      '@configs': resolve(__dirname, '..', 'configs')
+      '@modules': resolve(__dirname, '..', 'src', 'modules'),
+      '@components': resolve(__dirname, '..', 'src', 'modules', 'components'),
+      '@scripts': resolve(__dirname, '..', 'src', 'scripts'),
+      '@styles': resolve(__dirname, '..', 'src', 'styles'),
+      '@assets': resolve(__dirname, '..', 'src', 'assets'),
+      '@configs': resolve(__dirname, '..', 'src', 'configs'),
+      '@store': resolve(__dirname, '..', 'src', 'store')
     },
-    extensions: ['.vue', '.ts', '.js']
+    extensions: ['.js', '.vue', '.ts']
   },
   devtool: 'source-map',
   watch: !!(env.WEBPACK_MODE === 'development'),
   watchOptions: {
     poll: 500,
     ignored: [
-      resolve(__dirname, '..', 'node_modules'),
+      resolve(__dirname, '..', 'www'),
       resolve(__dirname, '..', 'configs'),
-      resolve(__dirname, '..', '@types'),
-      resolve(__dirname, '..', 'www')
+      resolve(__dirname, '..', 'node_modules')
     ]
   },
   performance: {

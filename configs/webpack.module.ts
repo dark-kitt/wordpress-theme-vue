@@ -55,7 +55,10 @@ const module = {
           options: {
             sassOptions: {
               indentWidth: 2,
-              includePaths: [resolve(__dirname, '..', 'styles'), resolve(__dirname, '..', 'assets')]
+              includePaths: [
+                resolve(__dirname, '..', 'src', 'styles'),
+                resolve(__dirname, '..', 'src', 'assets')
+              ]
             },
             sourceMap: true
           }

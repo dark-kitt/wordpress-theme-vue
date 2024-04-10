@@ -10,16 +10,19 @@
     "module": "NodeNext",
     "moduleResolution": "NodeNext",
     "baseUrl": ".",
-    "outDir": "@types",
+    "outDir": "src/@types",
     "paths": {
       "@scripts/*": [
-        "scripts/*"
+        "src/scripts/*"
       ],
       "@modules/*": [
-        "modules/*"
+        "src/modules/*"
       ],
       "@components/*": [
-        "modules/components/*"
+        "src/modules/components/*"
+      ],
+      "@store/*": [
+        "src/store/*"
       ]
     },
     "lib": [
@@ -29,10 +32,12 @@
     "types": ["node"]
   },
   "include": [
-    "*.ts",
+    "src/main.ts",
     "configs/**/*.ts",
-    "modules/**/*.vue",
-    "@types/shims-vue.d.ts"
+    "src/store/**/*.ts",
+    "src/scripts/**/*.ts",
+    "src/modules/**/*.vue",
+    "src/@types/shims-vue.d.ts"
   ],
   "exclude": ["www", "node_modules"],
   /** webpack */

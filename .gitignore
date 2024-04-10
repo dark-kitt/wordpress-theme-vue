@@ -4,8 +4,8 @@
 # node
 node_modules
 # typescript
-@types/*
-!@types/shims-vue.d.ts
+src/@types/*
+!src/@types/shims-vue.d.ts
 # output
 www
 # WordPress

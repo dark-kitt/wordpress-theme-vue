@@ -1,23 +1,11 @@
 import { createApp } from 'vue';
-import { createStore } from 'vuex';
+import { store, key } from '@store';
 
 import Home from '@modules/Home.vue';
 
 const theme = createApp(Home);
-const store = createStore({
-  state() {
-    return {
-      count: 0
-    };
-  },
-  mutations: {
-    increment(state) {
-      state.count++;
-    }
-  }
-});
-
-theme.use(store);
+// register Vuex store
+theme.use(store, key);
 
 // render theme after index.php was loaded
 document.addEventListener('DOMContentLoaded', () => {
