@@ -3,7 +3,7 @@
 
   <Headline :tag="'h1'" :text="'Wordpress'" />
 
-  <img src="@assets/icons/vue-icon.png" alt="image" />
+  <img src="@assets/icons/vue-icon.svg" alt="image" />
 
   <pre v-for="(item, key) in WordPress" :key="key">
     <Code :code="item" />
@@ -33,7 +33,6 @@ onBeforeMount(async () => {
     const data = await store.dispatch('api/fetchData', 'pages');
     // fetch data example
     if (data) WordPress.value = data;
-    console.log(WordPress);
   }
 });
 </script>
