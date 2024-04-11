@@ -10,7 +10,6 @@ export function useStore() {
   return baseUseStore(key);
 }
 
-// store modules
 import api, { ApiTypes } from './modules/api';
 // register store modules
 store.registerModule('api', api);
