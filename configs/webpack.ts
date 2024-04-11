@@ -13,7 +13,7 @@ const config: Configuration = {
   entry: ['./src/main.ts', './src/styles/main.scss'],
   output: {
     clean: true,
-    publicPath: '/',
+    publicPath: '/www/',
     path: resolve(__dirname, '..', 'www'),
     filename: devMode ? 'js/[name].bundle.js' : 'js/[name].[contenthash].bundle.min.js'
   },
