@@ -69,7 +69,7 @@ const module = {
       test: /\.(jpg|png|gif|svg|woff(2)|ttf|eot|pdf)$/,
       type: 'asset/resource',
       generator: {
-        filename: '[path][name][ext]'
+        filename: chunk => `${chunk.filename.replace('src', '')}/[name][ext]`
       }
     }
   ]
