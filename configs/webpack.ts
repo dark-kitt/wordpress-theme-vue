@@ -24,7 +24,6 @@ const config: Configuration = {
       '@scripts': resolve(__dirname, '..', 'src', 'scripts'),
       '@styles': resolve(__dirname, '..', 'src', 'styles'),
       '@assets': resolve(__dirname, '..', 'src', 'assets'),
-      '@configs': resolve(__dirname, '..', 'src', 'configs'),
       '@store': resolve(__dirname, '..', 'src', 'store')
     },
     extensions: ['.js', '.vue', '.ts']
