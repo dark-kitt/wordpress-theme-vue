@@ -1,6 +1,9 @@
+@import 'env';
+@import 'spacing';
 @import 'font-face';
 
 body {
-  background-color: yellow;
+  margin: 0;
+  padding: 0;
   font-family: 'Lato', Helvetica, Arial;
 }

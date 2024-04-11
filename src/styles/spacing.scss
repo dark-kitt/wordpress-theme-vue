@@ -1,0 +1,17 @@
+@use "sass:map";
+
+$space-values: (
+  xs: 5,
+  s: 10,
+  m: 20,
+  l: 30,
+  xl: 40
+);
+
+@function space($space) {
+  @if map.has-key($space-values, $space) {
+    @return #{map.get($space-values, $space)} + 'px';
+  }
+
+  @error "@function ERROR: Value #{$space} does not exists! Available values [#{map.keys($space-values)}]";
+}
