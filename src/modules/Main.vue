@@ -1,43 +1,39 @@
 <template>
   <PageLoader />
 
-  <div class="bla text">{{ text }}</div>
+  <Headline :tag="'h1'" :text="'Wordpress'" />
+
   <img src="@assets/icons/vue-icon.png" alt="image" />
-  <Button />
+
+  <pre v-for="(item, key) in WordPress" :key="key">
+    <Code :code="item" />
+  </pre>
+
+  <Link v-bind="{ href, target: 'blank', text: 'WordPress' }" />
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import { useStore } from '@store';
 
-import PageLoader from './PageLoader.vue';
-import Button from '@components/Button.vue';
+import PageLoader from '@modules/PageLoader.vue';
+import Headline from '@components/Headline.vue';
+import Code from '@components/Code.vue';
+import Link from '@components/Link.vue';
 
 const store = useStore();
-
-interface Props {
-  text?: string;
-}
-
-withDefaults(defineProps<Props>(), {
-  text: 'My test text.'
-});
+const WordPress = ref<{ [key: string]: unknown }>();
+const href = process.env.REST_API;
 
 onBeforeMount(async () => {
   // store token
   const tokenStored = await store.dispatch('api/fetchToken');
   if (tokenStored) {
-    // fetch data
-    const data = await store.dispatch('api/fetchData', 'posts');
+    // fetch all pages data
+    const data = await store.dispatch('api/fetchData', 'pages');
     // fetch data example
-    console.log('default data:', data);
+    if (data) WordPress.value = data;
+    console.log(WordPress);
   }
 });
 </script>
-
-<style lang="scss">
-.text {
-  color: red;
-  background-image: url('~@assets/icons/vue-icon.png');
-}
-</style>
