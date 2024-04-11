@@ -1,4 +1,6 @@
 <template>
+  <PageLoader />
+
   <div class="bla text">{{ text }}</div>
   <img src="@assets/icons/vue-icon.png" alt="image" />
   <Button />
@@ -8,6 +10,7 @@
 import { onBeforeMount } from 'vue';
 import { useStore } from '@store';
 
+import PageLoader from './PageLoader.vue';
 import Button from '@components/Button.vue';
 
 const store = useStore();

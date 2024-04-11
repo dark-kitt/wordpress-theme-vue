@@ -1,4 +1,7 @@
-const fetchToken = async ({ state, commit }) => {
+import { State, Commit, Getters } from 'vuex';
+
+const fetchToken = async ({ state, commit }: { state: State; commit: Commit }) => {
+  commit('setLoading', true);
   let validation = false;
   // prevent unnecessary request
   // validate if token is not default value
@@ -24,8 +27,8 @@ const fetchToken = async ({ state, commit }) => {
       'Content-Type': 'application/json'
     },
     body: JSON.stringify({
-      username: process.env.REST_USR,
-      password: process.env.REST_PWD
+      username: process.env.REST_USER,
+      password: process.env.REST_PASSWORD
     })
   });
 
@@ -35,10 +38,14 @@ const fetchToken = async ({ state, commit }) => {
     return true;
   }
 
+  commit('setLoading', false);
   return false;
 };
 
-const fetchData = async ({ getters }, endpoint) => {
+const fetchData = async (
+  { commit, getters }: { commit: Commit; getters: Getters },
+  endpoint: string
+) => {
   const token = getters['getToken'];
   const response = await fetch(`${process.env.REST_API}/wp-json/example/${endpoint}`, {
     method: 'POST',
@@ -49,6 +56,7 @@ const fetchData = async ({ getters }, endpoint) => {
   });
 
   const data = await response.json();
+  commit('setLoading', false);
 
   return data ? data : false;
 };

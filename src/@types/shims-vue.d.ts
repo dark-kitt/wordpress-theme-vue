@@ -11,6 +11,7 @@ declare module '@store' {
 
   export const key: InjectionKey<Store>;
   export const store: createStore;
+  // required for custom useStore function
   export function useStore(): Store;
 
   const content: any;

@@ -1,5 +1,11 @@
-const setToken = (state, token) => {
+import { State } from 'vuex';
+
+const setToken = (state: State, token: string) => {
   state.token = token;
 };
 
-export default { setToken };
+const setLoading = (state: State, loading: string) => {
+  state.loading = loading;
+};
+
+export default { setToken, setLoading };
