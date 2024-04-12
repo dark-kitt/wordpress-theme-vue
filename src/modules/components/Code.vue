@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 interface Props {
-  code: string;
+  code: string | { [key: string]: unknown };
 }
 
 withDefaults(defineProps<Props>(), {
