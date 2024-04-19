@@ -2,6 +2,7 @@ import env from './env';
 
 import TerserPlugin from 'terser-webpack-plugin';
 import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+import type { MinifyOptions as UglifyJSOptions } from 'uglify-js';
 
 const optimization = {
   minimize: !!(env.WEBPACK_MODE === 'production'),
@@ -22,9 +23,13 @@ const optimization = {
         ]
       }
     }),
-    new TerserPlugin({
+    new TerserPlugin<UglifyJSOptions>({
       test: /\.js$/,
-      extractComments: false
+      extractComments: false,
+      minify: TerserPlugin.uglifyJsMinify,
+      terserOptions: {
+        /** pass uglifyJS options to control the behaviour */
+      }
     })
   ],
   splitChunks: {
