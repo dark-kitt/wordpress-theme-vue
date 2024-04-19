@@ -28,7 +28,10 @@ const optimization = {
       extractComments: false,
       minify: TerserPlugin.uglifyJsMinify,
       terserOptions: {
-        /** pass uglifyJS options to control the behaviour */
+        /**
+         * pass uglifyJS options to control the behaviour
+         * https://github.com/mishoo/UglifyJS2#minify-options
+         */
       }
     })
   ],
