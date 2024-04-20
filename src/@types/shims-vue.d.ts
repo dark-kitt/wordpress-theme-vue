@@ -34,4 +34,8 @@ declare module '*.jpg' {
 }
 
 // global const's
-declare const TOKEN_DATA: { [key: string]: unknown };
+declare const TOKEN_DATA: {
+  token: string;
+  user: string;
+  role: string;
+};
