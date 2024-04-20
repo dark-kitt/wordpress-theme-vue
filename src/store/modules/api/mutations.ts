@@ -1,10 +1,10 @@
-import { State } from 'vuex';
+import { ApiTypes } from './states';
 
-const setToken = (state: State, token: string) => {
+const setToken = (state: ApiTypes, token: string) => {
   state.token = token;
 };
 
-const setLoading = (state: State, loading: string) => {
+const setLoading = (state: ApiTypes, loading: boolean) => {
   state.loading = loading;
 };
 
