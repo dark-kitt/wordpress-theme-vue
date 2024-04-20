@@ -13,7 +13,16 @@ export default <T>({
       ...(token && { Authorization: `Bearer ${token}` }),
       'Content-Type': 'application/json'
     }
-  }).then(response => {
-    return response.json() as Promise<T>;
+  }).then(async response => {
+    const data = (await response.json()) as Promise<T>;
+
+    if (!response.ok) {
+      // exclude JWT Authentication token errors
+      if (!(data as any).code?.includes('jwt_auth')) {
+        throw new Error(response.statusText);
+      }
+    }
+
+    return data;
   });
 };

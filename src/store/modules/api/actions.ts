@@ -8,21 +8,19 @@ const fetchData = async (
 ) => {
   // set loading state and fetch data
   commit('setLoading', true);
-  let response: {
-    [key: string]: unknown;
-    code: string;
-    data: {
-      status: number;
-    };
-  } = await callFetch({ method, token: getters['getToken'], endpoint });
+  let response = await callFetch<{ [key: string]: unknown }>({
+    method,
+    token: getters['getToken'],
+    endpoint
+  });
 
-  // token error handling
-  const { code, data } = response;
-  if (code && code.includes('jwt_auth') && data.status && data.status !== 200) {
+  // JWT Authentication error handling
+  const { code, data } = response as { code: string; data: { status: number } };
+  if (code?.includes('jwt_auth') && data?.status !== 200) {
     // log process to console
     console.warn('REST-API: System request new API token.');
 
-    // fetch new token if the old is expired
+    // fetch new token if the old is invalid
     const { role, token } = await callFetch<{ role: string; token: string }>({
       method: 'GET',
       endpoint: 'token'
@@ -31,7 +29,7 @@ const fetchData = async (
     if (role === 'rest_api_user' && token) {
       // commit new token and fetch data again
       await commit('setToken', token);
-      response = await callFetch({ method, token, endpoint });
+      response = await callFetch<{ [key: string]: unknown }>({ method, token, endpoint });
     }
   }
 
