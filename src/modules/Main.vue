@@ -32,13 +32,9 @@ const WordPress = ref<
 const href = process.env.REST_API;
 
 onBeforeMount(async () => {
-  // store token
-  const tokenStored = await store.dispatch('api/fetchToken');
-  if (tokenStored) {
-    // fetch all pages data
-    const data = await store.dispatch('api/fetchData', 'pages');
-    // fetch data example
-    if (data) WordPress.value = data;
-  }
+  // fetch all pages data
+  const data = await store.dispatch('api/fetchData', { endpoint: 'pages' });
+  // set data
+  if (data) WordPress.value = data;
 });
 </script>

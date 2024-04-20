@@ -32,3 +32,6 @@ declare module '*.jpg' {
   const content: any;
   export default content;
 }
+
+// global const's
+declare const TOKEN_DATA: { [key: string]: unknown };
