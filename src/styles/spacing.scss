@@ -1,48 +1,28 @@
-@use "sass:map";
+@use 'sass:map';
+@use 'env' as *;
 /**
  * spacing function
  *
  * usage:
  * padding-left: space(xs);
  */
-$space-values: (
-  xs: 5,
-  s: 10,
-  m: 20,
-  l: 30,
-  xl: 40
-);
-
-@function space($space) {
-  @if map.has-key($space-values, $space) {
-    @return #{map.get($space-values, $space)} + 'px';
+@function space($value) {
+  @if map.has-key($spaces, $value) {
+    @return #{map.get($spaces, $value)} + 'px';
   }
 
-  @error "@function ERROR: Value #{$space} does not exists! Available values [#{map.keys($space-values)}]";
+  @error '@function ERROR: Value #{$value} does not exists! Available values [#{map.keys($spaces)}]';
 }
-
 /**
  * spacing classes
  * 
  * usage:
  * padding-left: space(xs) === < ... class="pl-xs" />
  */
-$properties: (
-  p: padding,
-  m: margin
-);
-
-$directions: (
-  t: top,
-  r: right,
-  b: bottom,
-  l: left
-);
-
 @mixin space-classes {
   @each $p_key, $p_value in $properties {
     @each $d_key, $d_value in $directions {
-      @each $s_key, $s_value in $space-values {
+      @each $s_key, $s_value in $spaces {
         .#{$p_key}#{$d_key}-#{$s_key} {
           #{$p_value}-#{$d_value}: #{$s_value} + 'px';
         }
