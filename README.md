@@ -18,19 +18,16 @@ In my case, I used the second option and configured all the necessary stuff to m
 ## Let's start
 
 Install all necessary packages.
-
 ```shell
 yarn
 ```
 
 For development mode
-
 ```shell
 yarn dev
 ```
 
 For production mode
-
 ```shell
 yarn prod
 ```
@@ -42,5 +39,74 @@ As described before I create only the output for the "[**Islands Architecture**]
 # Getting started!
 
 I guess the best way to get the idea behind is to set up an example project together. The following example is based on a macOS system, but it could be possible, with some troubleshooting, that it will also work on Windows.
+
+As always, let's create a folder and change the directory.
+```shell
+mkdir example && cd example
+```
+## Set up the environment
+
+Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate and download the project as ZIP, open and copy the composer.json file into your project root directory (`/example`). In the next step we need a local server. Let's take my [**Docker**](https://github.com/dark-kitt/docker-php-apache-mysql) example project as base and we will modify it together.
+
+If you have a GitHub account and want to fetch each file by **curl**, you can use the following snippet.
+```shell
+curl --header "PRIVATE-TOKEN: <your_github_access_token>" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
+```
+
+Or save your private access token in a curl header file, e.g. *`~/.curl/github`* and include your specific header into your command.
+```text
+# ~/.curl/github
+PRIVATE-TOKEN: <github_access_token>
+```
+
+### composer.json
+
+```shell
+curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
+```
+
+### compose.yml
+```shell
+curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/compose.yml" > compose.yml
+```
+
+### Dockerfile
+```shell
+curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/Dockerfile" > Dockerfile
+```
+
+### vhosts.conf
+```shell
+curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/vhosts.conf" > vhosts.conf
+```
+
+Afterwards, your folder/file structure should look like this.
+```text
+/example
+├── compose.yml
+├── composer.json
+├── Dockerfile
+├── vhosts.conf
+```
+
+If you have an ACF Pro key, please add it manually inside of the **composer.json** file and call **`composer update`**. Otherwise we will remove ACF Pro and getting forward. Let's keep it quickly and remove ACF Pro. To do so, call the follwing command.
+```shell
+composer config --unset repositories.advanced-custom-fields/advanced-custom-fields-pro && composer remove advanced-custom-fields/advanced-custom-fields-pro
+```
+
+Now your folder/file structure should like this.
+```text
+/example
+├── .env
+├── compose.yml
+├── composer.json
+├── composer.lock
+├── Dockerfile
+├── /vendor
+├── ├── /...
+├── vhosts.conf
+├── /web
+├── ├── /...
+```
 
 ... coming soon
