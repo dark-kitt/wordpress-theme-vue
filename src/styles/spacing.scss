@@ -16,3 +16,29 @@ $space-values: (
   @error "@function ERROR: Value #{$space} does not exists! Available values [#{map.keys($space-values)}]";
 }
 
+$properties: (
+  p: padding,
+  m: margin
+);
+
+$directions: (
+  t: top,
+  r: right,
+  b: bottom,
+  l: left
+);
+
+@mixin space-classes {
+  @each $p_key, $p_value in $properties {
+    @each $d_key, $d_value in $directions {
+      @each $s_key, $s_value in $space-values {
+        .#{$p_key}#{$d_key}-#{$s_key} {
+          #{$p_value}-#{$d_value}: #{$s_value} + 'px';
+        }
+      }
+    }
+  }
+}
+
+@include space-classes;
+
