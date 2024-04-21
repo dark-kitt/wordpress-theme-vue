@@ -1,5 +1,10 @@
 @use "sass:map";
-
+/**
+ * spacing function
+ *
+ * usage:
+ * padding-left: space(xs);
+ */
 $space-values: (
   xs: 5,
   s: 10,
@@ -16,6 +21,12 @@ $space-values: (
   @error "@function ERROR: Value #{$space} does not exists! Available values [#{map.keys($space-values)}]";
 }
 
+/**
+ * spacing classes
+ * 
+ * usage:
+ * padding-left: space(xs) === < ... class="pl-xs" />
+ */
 $properties: (
   p: padding,
   m: margin

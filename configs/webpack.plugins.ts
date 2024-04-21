@@ -20,6 +20,7 @@ const plugins = [
       ? 'css/chunk/[name].bundle.css'
       : 'css/chunk/[name].[contenthash].bundle.min.css'
   }),
+  /** remove unused CSS */
   new PurgeCSSPlugin({
     paths: sync(`${resolve(__dirname, '..', 'src')}/**/*`, { nodir: true }),
     safelist: [],
