@@ -5,9 +5,8 @@ import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
 import type { MinifyOptions as UglifyJSOptions } from 'uglify-js';
 
 const optimization = {
-  minimize: !!(env.WEBPACK_MODE === 'production'),
+  minimize: true,
   minimizer: [
-    /** minimizer plugins for production mode */
     new CssMinimizerPlugin({
       test: /\.(sc|c)ss$/,
       minimizerOptions: {
@@ -15,25 +14,30 @@ const optimization = {
           'default',
           {
             discardComments: {
-              removeAll: true
+              /** remove only comments in production mode */
+              removeAll: env.WEBPACK_MODE === 'production'
             },
-            /** remove duplicate CSS */
+            /** remove always duplicated CSS */
             discardDuplicates: true
           }
         ]
       }
     }),
-    new TerserPlugin<UglifyJSOptions>({
-      test: /\.js$/,
-      extractComments: false,
-      minify: TerserPlugin.uglifyJsMinify,
-      terserOptions: {
-        /**
-         * pass uglifyJS options to control the behaviour
-         * https://github.com/mishoo/UglifyJS2#minify-options
-         */
-      }
-    })
+    ...(env.WEBPACK_MODE === 'production'
+      ? [
+          new TerserPlugin<UglifyJSOptions>({
+            test: /\.js$/,
+            extractComments: false,
+            minify: TerserPlugin.uglifyJsMinify,
+            terserOptions: {
+              /**
+               * pass uglifyJS options to control the behaviour
+               * https://github.com/mishoo/UglifyJS2#minify-options
+               */
+            }
+          })
+        ]
+      : [])
   ],
   splitChunks: {
     // chunks: 'all', throws error TS2322:
