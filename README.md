@@ -3,7 +3,7 @@ Project: [Part 1](https://github.com/dark-kitt/wordpress-boilerplate/tree/main),
 
 ---
 
-# Introduction
+## Introduction
 
 This is an example Vue project, based on [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) and [**Part 2**](https://github.com/dark-kitt/wordpress-theme-configuration) of the WordPress Boilerplate, which can be used to create a custom WordPress theme.
 
@@ -14,8 +14,6 @@ In my case, I used the second option and configured all the necessary stuff to m
 ### Requirements
 
 * [Yarn: ^1.*](https://yarnpkg.com/)
-
-## Let's start
 
 Install all necessary packages.
 ```shell
@@ -59,23 +57,23 @@ Or save your private access token in a curl header file, e.g. *`~/.curl/github`*
 PRIVATE-TOKEN: <github_access_token>
 ```
 
-### composer.json
+#### composer.json
 
 ```shell
 curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
 ```
 
-### compose.yml
+#### compose.yml
 ```shell
 curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/compose.yml" > compose.yml
 ```
 
-### Dockerfile
+#### Dockerfile
 ```shell
 curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/Dockerfile" > Dockerfile
 ```
 
-### vhosts.conf
+#### vhosts.conf
 ```shell
 curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/vhosts.conf" > vhosts.conf
 ```
@@ -89,7 +87,7 @@ Afterwards, your folder/file structure should look like this.
 ├── vhosts.conf
 ```
 
-If you have an ACF Pro key, please add it manually inside of the **composer.json** file and call **`composer update`**. Otherwise we will remove ACF Pro and getting forward. Let's keep it quickly and remove ACF Pro. To do so, call the follwing command.
+Let's continue. If you have an ACF Pro key, please add it manually inside of the **composer.json** file and call **`composer update`**. Otherwise we will remove ACF Pro and getting forward. Let's keep it quickly and remove ACF Pro. To do so, call the follwing command.
 ```shell
 composer config --unset repositories.advanced-custom-fields/advanced-custom-fields-pro && composer remove advanced-custom-fields/advanced-custom-fields-pro
 ```
