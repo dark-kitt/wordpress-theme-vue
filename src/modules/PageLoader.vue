@@ -69,8 +69,8 @@ store.watch(
 </script>
 
 <style lang="scss">
-@import '@styles/env';
-@import '@styles/spacing';
+@use '@styles/env' as *;
+@use '@styles/spacing' as *;
 
 .page-loader {
   opacity: 0;
