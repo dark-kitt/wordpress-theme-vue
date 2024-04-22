@@ -209,7 +209,7 @@ RUN pecl install xdebug \
 
 As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a secret area to configure our project. But, there is also another way to do it. If you don't prefere to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file, which includes `Deny from all`, inside of the `./web/app/themes/example/config` directory.
 
-⚠️ Start: Necessary local configuration to resolve the custom domain. \
+⚠️ **Start: Necessary local configuration to resolve the custom domain.**\
 Next we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
 
 Enter your machine password and open the hosts file.
@@ -222,7 +222,7 @@ Add, at the end of the file, the following line.
 # docker
 127.0.0.1       example.kitt api.example.kitt
 ```
-⚠️ End: Necessary local configuration to resolve the custom domain.
+⚠️ **End: Necessary local configuration to resolve the custom domain.**
 
 Afterwards, your folder/file structure should look like this.
 ```text
@@ -320,7 +320,7 @@ Confirm use of weak password => check
 Your Email => your@email.com
 Search engine visibility => check
 ```
-Press the button **`Install WordPress`**! And login as admin.
+Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to adjust two things. First of all activate your new custom theme, you'll find it under `Appearence`. The second thing is to create a **REST-API user**. Go to `Users` and create a user with the credentials of our `.env` file. In this case it is important to set the **`Username === REST_USER`** and the **`Password === admin`**. Don't forget to set the **`Role === REST API User`**.
 
 ## The Front-End
 
