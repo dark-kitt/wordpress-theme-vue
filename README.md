@@ -209,7 +209,7 @@ RUN pecl install xdebug \
 
 As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a secret area to configure our project. But, there is also another way to do it. If you don't prefere to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file, which includes `Deny from all`, inside of the `./web/app/themes/example/config` directory.
 
-⚠️ \
+⚠️ Start: Necessary local configuration to resolve the custom domain. \
 Next we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
 
 Enter your machine password and open the hosts file.
@@ -222,7 +222,7 @@ Add, at the end of the file, the following line.
 # docker
 127.0.0.1       example.kitt api.example.kitt
 ```
-⚠️
+⚠️ End: Necessary local configuration to resolve the custom domain.
 
 Afterwards, your folder/file structure should look like this.
 ```text
@@ -267,6 +267,62 @@ quit
 ```
 
 ## Configure WordPress
+
+Finally we can start to configure WordPress and dive into the interesting part to start working with our new custom WordPress theme. But before we start and try to access the `api.example.kitt` domain to open the backend system, we will go one step back. This means stop the running container with `ctrl + C`.
+
+After the conatiners are stopped we need to set up the `.env` file. Update the follwing values.
+```shell
+DB_HOST="wp-mysql"
+...
+DB_NAME="wp_test"
+DB_USER="db_user"
+DB_PASSWORD="db_password"
+...
+WP_HOME="http://example.kitt"
+ENV_SITEURL="http://api.example.kitt"
+...
+JWT_AUTH_CORS_ENABLE=true
+```
+
+If you already have any mail account which is usable for PHPMailer you can also set up the following values.
+```shell
+SMTP_HOST="smtp.domain.com"
+SMTP_AUTH=true
+SMTP_PORT=587
+SMTP_SECURE="tls"
+SMTP_USERNAME="your@username.com"
+SMTP_PASSWORD="password"
+SMTP_FROM="your@username.com"
+SMTP_FROMNAME="WordPress"
+```
+
+Now, it is necessary to rebuild the containers.
+```shell
+docker compose build
+```
+Afterwards, we will run the new containers.
+```shell
+docker compose up
+```
+
+⚠️ **Keep in mind, every time you edit your environment, you need to rebuild your containers.** ⚠️
+
+Let's try to access our configured backend system. Open your browser and enter the following domain.
+```shell
+api.example.kitt
+```
+You should see a mask from WordPress where you have to enter your first values of your custom backend system. We will enter the following data.
+```shell
+Site Title => example.kitt
+Username => admin
+Password => admin
+Confirm use of weak password => check
+Your Email => your@email.com
+Search engine visibility => check
+```
+Press the button **`Install WordPress`**! And login as admin.
+
+## The Front-End
 
 
 
