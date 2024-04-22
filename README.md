@@ -209,7 +209,7 @@ RUN pecl install xdebug \
 
 As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a secret area to configure our project. But, there is also another way to do it. If you don't prefere to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file, which includes `Deny from all`, inside of the `./web/app/themes/example/config` directory.
 
-⚠️
+⚠️ \
 Next we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
 
 Enter your machine password and open the hosts file.
@@ -217,11 +217,57 @@ Enter your machine password and open the hosts file.
 sudo vim /etc/hosts
 ```
 
-Add in the end of the file the follwing line.
+Add, at the end of the file, the following line.
 ```shell
 # docker
 127.0.0.1       example.kitt api.example.kitt
 ```
 ⚠️
+
+Afterwards, your folder/file structure should look like this.
+```text
+/example
+├── .env
+├── compose.yml
+├── composer.json
+├── composer.lock
+├── Dockerfile
+├── /vendor
+├── ├── /...
+├── vhosts.conf
+├── /web
+├── ├── /...
+```
+
+### MySQL
+
+Before we can go ahead and configure the backend system, it is necessary to set the permissions for our database user. Open your (downloaded) Docker application and run `docker compose up` in your terminal.
+```shell
+docker compose up
+```
+After all necessary packages are installed and the containers are running, connect to the MySQL container.
+```shell
+docker exec -it wp-mysql bash
+```
+Log in as root user. The password is defined in the **compose.yml** file, in our case it is `ro_password`.
+```shell
+mysql -u root -p
+```
+Now, set the privileges for the `db_user`.
+```shell
+GRANT ALL PRIVILEGES ON *.* TO 'db_user'@'%' WITH GRANT OPTION;
+```
+Flush the privileges.
+```shell
+FLUSH PRIVILEGES;
+```
+Logout.
+```shell
+quit
+```
+
+## Configure WordPress
+
+
 
 ... coming soon
