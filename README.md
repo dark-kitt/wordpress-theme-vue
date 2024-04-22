@@ -44,9 +44,9 @@ mkdir example && cd example
 ```
 ## Set up the environment
 
-Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate and download the project as ZIP, open and copy the composer.json file into your project root directory (`/example`). In the next step we need a local server. Let's take my [**Docker**](https://github.com/dark-kitt/docker-php-apache-mysql) example project as base and we will modify it together.
+Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate and download the project as ZIP, open and copy the composer.json file into your project root directory (`/example`). If you have a GitHub account and want to fetch the file by **curl**, you can use the following snippet.
 
-If you have a GitHub account and want to fetch each file by **curl**, you can use the following snippet.
+#### composer.json
 ```shell
 curl --header "PRIVATE-TOKEN: <your_github_access_token>" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
 ```
@@ -56,34 +56,8 @@ Or save your private access token in a curl header file, e.g. *`~/.curl/github`*
 # ~/.curl/github
 PRIVATE-TOKEN: <github_access_token>
 ```
-
-#### composer.json
 ```shell
 curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
-```
-
-#### compose.yml
-```shell
-curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/compose.yml" > compose.yml
-```
-
-#### Dockerfile
-```shell
-curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/Dockerfile" > Dockerfile
-```
-
-#### vhosts.conf
-```shell
-curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/docker-php-apache-mysql/main/vhosts.conf" > vhosts.conf
-```
-
-Afterwards, your folder/file structure should look like this.
-```text
-/example
-├── compose.yml
-├── composer.json
-├── Dockerfile
-├── vhosts.conf
 ```
 
 ### Composer
@@ -96,34 +70,49 @@ Now your folder/file structure should like this.
 ```text
 /example
 ├── .env
-├── compose.yml
 ├── composer.json
 ├── composer.lock
-├── Dockerfile
 ├── /vendor
 ├── ├── /...
-├── vhosts.conf
 ├── /web
 ├── ├── /...
 ```
 
 ### Docker
 
-Edit the following lines inside of the Docker files.
+In the next step we need a local server. Let's work with [Docker](https://www.docker.com/products/docker-desktop/). If you don't have Docker you can download it [here](https://www.docker.com/products/docker-desktop/). We only need 3 files to set up Docker for this project. Please, copy and paste the follwing data and create each file in the root directory of our new project.
 
-**compose.yml**
-Just edit line [11].
+#### compose.yml
 ```yml
-# from
-volumes:
-  - .:/var/www/html
-# to
-volumes:
-  - .:/var/www/html/web
+version: "3.9"
+services:
+  webserver:
+    container_name: wp-webserver
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 80:80
+    volumes:
+      - ./web:/var/www/html/web
+    depends_on:
+      - mysql-db
+    environment:
+      XDEBUG_CONFIG: remote_host=host.docker.internal
+
+  mysql-db:
+    container_name: wp-mysql
+    image: mysql:8.0
+    environment:
+      MYSQL_ROOT_PASSWORD: ro_password
+      MYSQL_DATABASE: db_test
+      MYSQL_USER: db_user
+      MYSQL_PASSWORD: db_password
+    ports:
+      - "3306:3306"
 ```
 
-**Dockerfile**
-Copy and paste the next lines into your Dockerfile.
+#### Dockerfile
 ```Dockerfile
 # Use an official PHP runtime
 FROM php:8.2-apache
@@ -171,48 +160,68 @@ RUN pecl install xdebug \
   && docker-php-ext-enable xdebug
 ```
 
-**vhosts.conf**
-Edit line [7] and [8].
-```shell
-# from
-/var/www/html/api
-# to
-/var/www/html/web
-```
-
-Edit line [23] and [24].
-```shell
-# from
-/var/www/html
-# to
-/var/www/html/web/app/themes/wordpress
-```
-
-Now we need to deny the the access to the `/var/www/html/web/app/themes/wordpress/config` directory. There are two ways to do it. First you can add a .htaccess file, which includes ` Deny from all` inside of the directory. The second way is to add the following lines inside the VirtualHost's to your Apache **vhosts.conf** file.
-```shell
+#### vhosts.conf
+```xml
 <VirtualHost *:80>
   ServerName api.example.kitt
-...
+  ServerAlias www.api.example.kitt
+  ServerAdmin webmaster@localhost
+
+  DocumentRoot /var/www/html/web
+  <Directory /var/www/html/web>
+    Options Indexes FollowSymlinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+
   # deny the access for the theme config files (.env)
-  <Directory  /var/www/html/web/app/themes/wordpress/config>
+  <Directory  /var/www/html/web/app/themes/example/config>
     Order deny,allow
     Deny from all
   </Directory>
-...
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
-```
-And
-```shell
+
 <VirtualHost *:80>
   ServerName example.kitt
-...
+  ServerAlias www.example.kitt
+  ServerAdmin webmaster@localhost
+
+  DocumentRoot /var/www/html/web/app/themes/example
+  <Directory /var/www/html/web/app/themes/example>
+    Options Indexes FollowSymlinks
+    AllowOverride All
+    Require all granted
+  </Directory>
+
   # deny the access for the theme config files (.env)
-  <Directory  /var/www/html/web/app/themes/wordpress/config>
+  <Directory  /var/www/html/web/app/themes/example/config>
     Order deny,allow
     Deny from all
   </Directory>
-...
+
+  ErrorLog ${APACHE_LOG_DIR}/error.log
+  CustomLog ${APACHE_LOG_DIR}/access.log combined
 </VirtualHost>
 ```
+
+As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a secret area to configure our project. But, there is also another way to do it. If you don't prefere to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file, which includes `Deny from all`, inside of the `./web/app/themes/example/config` directory.
+
+⚠️
+Next we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
+
+Enter your machine password and open the hosts file.
+```shell
+sudo vim /etc/hosts
+```
+
+Add in the end of the file the follwing line.
+```shell
+# docker
+127.0.0.1       example.kitt api.example.kitt
+```
+⚠️
 
 ... coming soon
