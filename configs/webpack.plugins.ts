@@ -1,8 +1,12 @@
 import { resolve } from 'path';
-import { DefinePlugin } from 'webpack';
+import { sync } from 'glob';
 
+import { DefinePlugin } from 'webpack';
 import { VueLoaderPlugin } from 'vue-loader';
+
 import MiniCssExtractPlugin from 'mini-css-extract-plugin';
+import { PurgeCSSPlugin } from 'purgecss-webpack-plugin';
+
 import WebpackAssetsManifest from 'webpack-assets-manifest';
 
 import env from './env';
@@ -15,6 +19,12 @@ const plugins = [
     chunkFilename: devMode
       ? 'css/chunk/[name].bundle.css'
       : 'css/chunk/[name].[contenthash].bundle.min.css'
+  }),
+  /** remove unused CSS */
+  new PurgeCSSPlugin({
+    paths: sync(`${resolve(__dirname, '..', 'src')}/**/*`, { nodir: true }),
+    safelist: [],
+    blocklist: []
   }),
   new DefinePlugin({ ...env, 'process.env': JSON.stringify(env) }),
   new WebpackAssetsManifest({

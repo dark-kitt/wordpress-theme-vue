@@ -32,3 +32,10 @@ declare module '*.jpg' {
   const content: any;
   export default content;
 }
+
+// global const's
+declare const TOKEN_DATA: {
+  token: string;
+  user: string;
+  role: string;
+};

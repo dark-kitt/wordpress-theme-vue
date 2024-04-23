@@ -1,5 +1,5 @@
-import { State } from 'vuex';
+import { ApiTypes } from './states';
 
-const getToken = (state: State) => state.token;
+const getToken = (state: ApiTypes) => state.token;
 
 export default { getToken };
