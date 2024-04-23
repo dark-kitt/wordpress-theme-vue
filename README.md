@@ -9,7 +9,7 @@ This is an example Vue project, based on [**Part 1**](https://github.com/dark-ki
 
 You can work with the WordPress backend system in two different ways. The first way would be to separate both systems from each other so that you have a headless backend with an unattached front-end system. The second way would be to use both systems together for an "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)" so that you are still able to use the PHP files from WordPress and hydrate dynamic Vue components inside of your DOM structure.
 
-In my case, I used the second option and configured all the necessary stuff to make it usable for the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)", but it's easy to modify the project to handle the first way and separate both systems. Just install the "[HtmlWebpackPlugin](https://webpack.js.org/plugins/html-webpack-plugin/)", and a template engine like [Handlebars](https://handlebarsjs.com/) to render the output. Afterward, it's just necessary to modify the Webpack configuration.
+In my case, I used the second option and configured all the necessary stuff to make it usable for the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)", but it's easy to modify the project to handle the first way and separate both systems. Just install the [HtmlWebpackPlugin](https://webpack.js.org/plugins/html-webpack-plugin/), and a template engine like [Handlebars](https://handlebarsjs.com/) to render the output. Afterward, it's just necessary to modify the Webpack and the Apache configuration.
 
 ### Requirements
 
@@ -714,11 +714,7 @@ const TOKEN_DATA = <?= json_encode($kitt_instance->get_token()->data, JSON_PRETT
 <?php get_footer(); ?>
 ```
 
-Ok, that was a lot of instruction, but now you are done! Just start the front-end system by calling `yarn dev` and create the necessary output to make our example project visible at `example.kitt`.
-
-```shell
-yarn dev
-```
+Ok, that was a lot of instructions, but now you are done! Just install all necessary packages with `yarn` and start the front-end system by calling `yarn dev`. Afterward, all the necessary output should be created inside of the `/www` directory to make our example project visible at `example.kitt`.
 
 Now it is up to you. Be creative and start coding. Just place your scripts and styles inside of the `/src` directory and create your own custom front-end system.
 
