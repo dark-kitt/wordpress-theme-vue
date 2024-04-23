@@ -44,14 +44,14 @@ mkdir example && cd example
 ```
 ## Set up the environment
 
-Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate and download the project as ZIP, open and copy the composer.json file into your project root directory (`/example`). If you have a GitHub account and want to fetch the file by **curl**, you can use the following snippet.
+Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate download the project as ZIP, and open and copy-paste the composer.json file into your project root directory (`/example`). If you have a GitHub account and want to fetch the file by **curl**, you can use the following snippet.
 
 #### composer.json
 ```shell
 curl --header "PRIVATE-TOKEN: <your_github_access_token>" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
 ```
 
-Or save your private access token in a curl header file, e.g. *`~/.curl/github`* and include your specific header into your command.
+Or save your private access token in a curl header file, e.g. *`~/.curl/github`* and include your specific header in your command.
 ```text
 # ~/.curl/github
 PRIVATE-TOKEN: <github_access_token>
@@ -61,12 +61,12 @@ curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/wordp
 ```
 
 ### Composer
-Let's continue. If you have an ACF Pro key, please add it manually inside of the **composer.json** file and call **`composer update`**. Otherwise we will remove ACF Pro and getting forward. Let's keep it quickly and remove ACF Pro. To do so, call the follwing command.
+Let's continue. If you have an ACF Pro key, please add it manually inside of the **composer.json** file and call **`composer update`**. Otherwise, we will remove ACF Pro and get forward. Let's keep it quickly and remove ACF Pro. To do so, call the following command.
 ```shell
 composer config --unset repositories.advanced-custom-fields/advanced-custom-fields-pro && composer remove advanced-custom-fields/advanced-custom-fields-pro
 ```
 
-Now your folder/file structure should like this.
+Now your folder/file structure should be like this.
 ```text
 /example
 ├── .env
@@ -80,7 +80,7 @@ Now your folder/file structure should like this.
 
 ### Docker
 
-In the next step we need a local server. Let's work with [Docker](https://www.docker.com/products/docker-desktop/). If you don't have Docker you can download it [here](https://www.docker.com/products/docker-desktop/). We only need 3 files to set up Docker for this project. Please, copy and paste the follwing data and create each file in the root directory of our new project.
+In the next step, we need a local server. Let's work with [Docker](https://www.docker.com/products/docker-desktop/). If you don't have Docker you can download it [here](https://www.docker.com/products/docker-desktop/). We only need 3 files to set up Docker for this project. Please, copy and paste the following data and create each file in the root directory of our new project.
 
 #### compose.yml
 ```yml
@@ -207,10 +207,10 @@ RUN pecl install xdebug \
 </VirtualHost>
 ```
 
-As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a secret area to configure our project. But, there is also another way to do it. If you don't prefere to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file, which includes `Deny from all`, inside of the `./web/app/themes/example/config` directory.
+As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a secret area to configure our project. But there is also another way to do it. If you don't prefer to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file, which includes `Deny from all`, inside of the `./web/app/themes/example/config` directory.
 
 ⚠️ **Start: Necessary local configuration to resolve the custom domain.**\
-Next we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
+Next, we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this, you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
 
 Enter your machine password and open the hosts file.
 ```shell
@@ -268,9 +268,9 @@ quit
 
 ## Configure WordPress
 
-Finally we can start to configure WordPress and dive into the interesting part to start working with our new custom WordPress theme. But before we start and try to access the `api.example.kitt` domain to open the backend system, we will go one step back. This means stop the running container with `ctrl + C`.
+Finally, we can start to configure WordPress and dive into the interesting part to start working with our new custom WordPress theme. But before we start and try to access the `api.example.kitt` domain to open the backend system, we will go one step back. This means stop the running container with `ctrl + C`.
 
-After the conatiners are stopped we need to set up the `.env` file. Update the follwing values.
+After the containers are stopped we need to set up the `.env` file. Update the following values.
 ```shell
 DB_HOST="wp-mysql"
 ...
@@ -284,7 +284,7 @@ ENV_SITEURL="http://api.example.kitt"
 JWT_AUTH_CORS_ENABLE=true
 ```
 
-If you already have any mail account which is usable for PHPMailer you can also set up the following values.
+If you already have an email account that is usable for PHPMailer you can also set up the following values.
 ```shell
 SMTP_HOST="smtp.domain.com"
 SMTP_AUTH=true
@@ -305,13 +305,13 @@ Afterwards, we will run the new containers.
 docker compose up
 ```
 
-⚠️ **Keep in mind, every time you edit your environment, you need to rebuild your containers.** ⚠️
+⚠️ **Keep in mind, that every time you edit your environment, you need to rebuild your containers.** ⚠️
 
 Let's try to access our configured backend system. Open your browser and enter the following domain.
 ```shell
 api.example.kitt
 ```
-You should see a mask from WordPress where you have to enter your first values of your custom backend system. We will enter the following data.
+You should see a mask from WordPress where you have to enter the first values of your custom backend system. We will enter the following data.
 ```shell
 Site Title => example.kitt
 Username => admin
@@ -320,10 +320,10 @@ Confirm use of weak password => check
 Your Email => your@email.com
 Search engine visibility => check
 ```
-Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to adjust two things. First of all activate your new custom theme, you'll find it under `Appearence`. The second thing is to create a **REST-API user**. Go to `Users` and create a user with the credentials of our `.env` file. In this case it is important to set the **`Username === REST_USER`** and the **`Password === admin`**. Don't forget to set the **`Role === REST API User`**.
+Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to adjust two things. First of all, activate your new custom theme, you'll find it under `Appearence`. The second thing is to create a **REST-API user**. Go to `Users` and create a user with the credentials of our `.env` file. In this case, it is important to set the **`Username === REST_USER`** and the **`Password === admin`**. Don't forget to set the **`Role === REST API User`**.
 
 ## The Front-End
 
-
+Let's dive into the front-end directory `./web/app/themes/example/` and do some stuff.
 
 ... coming soon
