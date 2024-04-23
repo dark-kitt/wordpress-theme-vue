@@ -61,7 +61,7 @@ curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/wordp
 ```
 
 ### Composer
-Let's continue. If you have an ACF Pro key, please add it manually inside of the **composer.json** file [25] and call **`composer update`**. Otherwise, we will remove ACF Pro and get forward. Let's keep it quickly and remove ACF Pro. To do so, call the following command.
+Let's continue. If you have an ACF Pro key, please add it manually inside of the **composer.json** file [25](replace `<<ACF_KEY>>` with your key) and call **`composer update`**. Otherwise, we will remove ACF Pro and get forward. Let's keep it quickly and remove ACF Pro. To do so, call the following command.
 ```shell
 composer config --unset repositories.advanced-custom-fields/advanced-custom-fields-pro && composer remove advanced-custom-fields/advanced-custom-fields-pro
 ```
@@ -80,7 +80,7 @@ Now, your folder/file structure should be like this.
 
 ### Docker
 
-In the next step, we need a local server. Let's work with [Docker](https://www.docker.com/products/docker-desktop/). If you don't have Docker you can download it [here](https://www.docker.com/products/docker-desktop/). We only need 3 files to set up Docker for this project. Please, copy and paste the following snippets and create each file in the root directory (`/example`) of our new project.
+In the next step, we need a local server. Let's work with [Docker](https://www.docker.com/products/docker-desktop/). If you don't have Docker you can download it [here](https://www.docker.com/products/docker-desktop/). We need only 3 files to set up the environment for Docker. Please, copy and paste the following snippets and create each file in the root directory (`/example`) of our new project.
 
 #### compose.yml
 ```yml
@@ -207,22 +207,7 @@ RUN pecl install xdebug \
 </VirtualHost>
 ```
 
-As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a save area to configure our project in the front-end directory. But there is also another way to do it. If you don't prefer to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file that includes `Deny from all` inside of the `./web/app/themes/example/config` directory.
-
-⚠️ **Necessary local configuration to resolve the custom domain.**
-
-Next, we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this, you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
-
-Enter your machine password and open the hosts file.
-```shell
-sudo vim /etc/hosts
-```
-
-Add, at the end of the file, the following line.
-```shell
-# docker
-127.0.0.1       example.kitt api.example.kitt
-```
+As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a save area to configure our project front-end. But there is also another way to do it. If you don't prefer to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file that includes `Deny from all` inside of the `./web/app/themes/example/config` directory.
 
 Afterward, your folder/file structure should look like this.
 ```text
@@ -237,6 +222,21 @@ Afterward, your folder/file structure should look like this.
 ├── vhosts.conf
 ├── /web
 ├── ├── /...
+```
+
+⚠️ **Necessary local configuration to resolve the custom domain.**
+
+Next, we need to add our local domain to our local hosts file to resolve the custom local domain in our browser. For this, you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
+
+Open a new terminal window and call the following command.
+```shell
+sudo vim /etc/hosts
+```
+
+Enter your machine password and open the hosts file. Add at the end of the file the following line.
+```shell
+# docker
+127.0.0.1       example.kitt api.example.kitt
 ```
 
 ### MySQL
@@ -270,13 +270,13 @@ Cancel the connection to the MySQL container by pressing `ctrl + P` and `ctrl + 
 
 ## Configure WordPress
 
-Finally, we can start to configure the WordPress backend system and dive into the interesting part to start working with our new custom WordPress theme. But before we start and try to access the `api.example.kitt` domain to open the backend system, we will go one step back. This means stopping the running containers with ctrl + C inside of the terminal window.
+Finally, we can start to configure the WordPress backend system and dive into the interesting part to start working with our new custom WordPress theme. But before we start and try to access the `api.example.kitt` domain to open the backend system, we will go one step back. Stop the running containers with `ctrl + C` inside of our terminal window.
 
-After the containers are stopped we need to set up the `.env` file. Please update the following values.
+After the containers are stopped we need to set up the `.env` and the `./web/.htaccess` file. Please update the following values.
 
 #### .env
 ```shell
-DB_HOST="wp-mysql"
+DB_HOST="wp-mysql" // same name as the container
 ...
 DB_NAME="wp_test"
 DB_USER="db_user"
@@ -284,6 +284,8 @@ DB_PASSWORD="db_password"
 ...
 WP_HOME="http://example.kitt"
 ENV_SITEURL="http://api.example.kitt"
+...
+WP_DEBUG_LOG="/dev/stderr" // docker error log dir
 ...
 JWT_AUTH_CORS_ENABLE=true
 ```
@@ -298,6 +300,12 @@ SMTP_USERNAME="your@username.com"
 SMTP_PASSWORD="password"
 SMTP_FROM="your@username.com"
 SMTP_FROMNAME="WordPress"
+```
+
+#### .htaccess
+```shell
+SetEnvIf Host ^ KITT_TLD=.kitt
+SetEnvIf Host ^ KITT_SLD=example
 ```
 
 Now, it is necessary to rebuild the containers. Call the following command.
@@ -324,7 +332,7 @@ Confirm use of weak password => check
 Your Email => your@email.com
 Search engine visibility => check
 ```
-Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to adjust two things. First of all, activate your new custom theme, you'll find it under `Appearance`. The second thing is to create a **REST-API user**. Go to `Users` and create a user with the credentials of our `.env` file. In this case, it is important to set the **`Username === REST_USER`**, the **`Password === admin`**, and the **`Role === REST API User`**.
+Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to activate our new custom theme, you'll find it under `Appearance`.
 
 ## The Front-End
 
@@ -525,9 +533,12 @@ $kitt_instance->REST_API([
 
 As you can see, I set the `Access-Control-Allow-Origin` header to `WP_HOME`, this means that requests are only allowed from `example.kitt`. This is important because we don't want, that other websites can access the data. The namespace is set to `example` by `explode('.', parse_url(WP_HOME)['host'])[0]`, so if you want to make requests to the REST-API you need to call `api.example.com/wp-json/example/endpoint`.
 
+After we added the REST-API configuration snippet and reloaded the backend system, we need to create a **REST-API user**. Go to `Users` and create a user with the credentials of our `.env` file. In this case, it is important to set the **`Username === REST_USER`**, the **`Password === admin`**, and the **`Role === REST API User`**.
+
+
 ### JWT Token Handling
 
-Obviously, we need a token for each request. To retrieve a token we will add now a small snippet to the `functions.php` file. Let's extend the instance and add a new endpoint and a callback function to handle this stuff.
+Obviously, we need a token for each request. To retrieve a token we will add now a small snippet to the `functions.php` file. Let's extend the instance and add a new endpoint and a callback function to handle the request.
 
 #### functions.php / adding REST-API endpoint
 ```PHP
@@ -660,7 +671,7 @@ add_action('wp_enqueue_scripts', function () {
 });
 ```
 
-As you can see, I create a manifest.json file inside of the output directory (`/www`) and read and add all scripts and styles that are listed in the JSON file. It is required to add an ID for each file, so, I remove the hash to have a readable ID name. I also create an exception for the `main.bundle.js` file, that this file is always included at the end of the DOM.
+As you can see, I create a manifest.json file inside of the output directory (`/www`) by **`Webpack`** and read and add all scripts and styles that are listed in the JSON file. It is required to add an ID for each file, so, I remove the hash to have a readable ID name. I also create an exception for the `main.bundle.js` file, that this file is always included at the end of the DOM.
 
 The last point is to request a token and hand over it to the front-end system. For this, I created just a global constant.
 
@@ -713,6 +724,10 @@ const TOKEN_DATA = <?= json_encode($kitt_instance->get_token()->data, JSON_PRETT
 
 <?php get_footer(); ?>
 ```
+
+#### .env
+
+The last step is to create the `.env` file inside of the `/configs` theme directory. Please copy and paste the `.example.env` file insdie of the `./web/app/themes/example/configs` directory.
 
 Ok, that was a lot of instructions, but now you are done! Just install all necessary packages with `yarn` and start the front-end system by calling `yarn dev`. Afterward, all the necessary output should be created inside of the `/www` directory to make our example project visible at `example.kitt`.
 
