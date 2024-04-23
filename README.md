@@ -712,7 +712,7 @@ const TOKEN_DATA = <?= json_encode($kitt_instance->get_token()->data, JSON_PRETT
 <?php get_footer(); ?>
 ```
 
-Ok, that was a long line of code and instruction, but now you are done! Just start the front-end system by calling `yarn dev`and create the necessary output to make our example project visible at `example.kitt`.
+Ok, that was a long line of code and instruction, but now you are done! Just start the front-end system by calling `yarn dev` and create the necessary output to make our example project visible at `example.kitt`.
 
 ```shell
 yarn dev
