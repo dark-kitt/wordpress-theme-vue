@@ -727,7 +727,7 @@ const TOKEN_DATA = <?= json_encode($kitt_instance->get_token()->data, JSON_PRETT
 
 #### .env
 
-The last step is to create the `.env` file inside of the `/configs` theme directory. Please copy and paste the `.example.env` file insdie of the `./web/app/themes/example/configs` directory.
+The last step is to create the `.env` file inside of the `/configs` theme directory. Please copy and paste the `.example.env` file inside of the `./web/app/themes/example/configs` directory.
 
 Ok, that was a lot of instructions, but now you are done! Just install all necessary packages with `yarn` and start the front-end system by calling `yarn dev`. Afterward, all the necessary output should be created inside of the `/www` directory to make our example project visible at `example.kitt`.
 
