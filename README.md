@@ -9,7 +9,7 @@ This is an example Vue project, based on [**Part 1**](https://github.com/dark-ki
 
 You can work with the WordPress backend system in two different ways. The first way would be to separate both systems from each other so that you have a headless backend with an unattached front-end system. The second way would be to use both systems together for an "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)" so that you are still able to use the PHP files from WordPress and hydrate dynamic Vue components inside of your DOM structure.
 
-In my case, I used the second option and configured all the necessary stuff to make it usable for the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)", but it's easy to modify the project to handle the first way and separate both systems. Just install the "[HtmlWebpackPlugin](https://webpack.js.org/plugins/html-webpack-plugin/)", and a template engine like [Handlebars](https://handlebarsjs.com/) to render the output, afterwards, it's just necessary to modify the Webpack configuration.
+In my case, I used the second option and configured all the necessary stuff to make it usable for the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)", but it's easy to modify the project to handle the first way and separate both systems. Just install the "[HtmlWebpackPlugin](https://webpack.js.org/plugins/html-webpack-plugin/)", and a template engine like [Handlebars](https://handlebarsjs.com/) to render the output. Afterward, it's just necessary to modify the Webpack configuration.
 
 ### Requirements
 
@@ -20,12 +20,12 @@ Install all necessary packages.
 yarn
 ```
 
-For development mode
+For development mode.
 ```shell
 yarn dev
 ```
 
-For production mode
+For production mode.
 ```shell
 yarn prod
 ```
@@ -44,14 +44,14 @@ mkdir example && cd example
 ```
 ## Set up the environment
 
-Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate download the project as ZIP, and open and copy-paste the composer.json file into your project root directory (`/example`). If you have a GitHub account and want to fetch the file by **curl**, you can use the following snippet.
+Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate download the project as ZIP, and open and copy-paste the composer.json file into your project root directory (`/example`). If you have a GitHub account and want to fetch the file by **curl** you can use the following snippet.
 
 #### composer.json
 ```shell
 curl --header "PRIVATE-TOKEN: <your_github_access_token>" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
 ```
 
-Or save your private access token in a curl header file, e.g. *`~/.curl/github`* and include your specific header in your command.
+Or save your private access token in a curl header file, e.g. `~/.curl/github`, and include your specific header in your command.
 ```text
 # ~/.curl/github
 PRIVATE-TOKEN: <github_access_token>
@@ -61,12 +61,12 @@ curl -H @"$HOME/.curl/github" "https://raw.githubusercontent.com/dark-kitt/wordp
 ```
 
 ### Composer
-Let's continue. If you have an ACF Pro key, please add it manually inside of the **composer.json** file and call **`composer update`**. Otherwise, we will remove ACF Pro and get forward. Let's keep it quickly and remove ACF Pro. To do so, call the following command.
+Let's continue. If you have an ACF Pro key, please add it manually inside of the **composer.json** file [25] and call **`composer update`**. Otherwise, we will remove ACF Pro and get forward. Let's keep it quickly and remove ACF Pro. To do so, call the following command.
 ```shell
 composer config --unset repositories.advanced-custom-fields/advanced-custom-fields-pro && composer remove advanced-custom-fields/advanced-custom-fields-pro
 ```
 
-Now your folder/file structure should be like this.
+Now, your folder/file structure should be like this.
 ```text
 /example
 ├── .env
@@ -80,7 +80,7 @@ Now your folder/file structure should be like this.
 
 ### Docker
 
-In the next step, we need a local server. Let's work with [Docker](https://www.docker.com/products/docker-desktop/). If you don't have Docker you can download it [here](https://www.docker.com/products/docker-desktop/). We only need 3 files to set up Docker for this project. Please, copy and paste the following data and create each file in the root directory of our new project.
+In the next step, we need a local server. Let's work with [Docker](https://www.docker.com/products/docker-desktop/). If you don't have Docker you can download it [here](https://www.docker.com/products/docker-desktop/). We only need 3 files to set up Docker for this project. Please, copy and paste the following snippets and create each file in the root directory (`/example`) of our new project.
 
 #### compose.yml
 ```yml
@@ -207,9 +207,10 @@ RUN pecl install xdebug \
 </VirtualHost>
 ```
 
-As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a secret area to configure our project. But there is also another way to do it. If you don't prefer to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file, which includes `Deny from all`, inside of the `./web/app/themes/example/config` directory.
+As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a save area to configure our project in the front-end directory. But there is also another way to do it. If you don't prefer to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file that includes `Deny from all` inside of the `./web/app/themes/example/config` directory.
 
-⚠️ **Start: Necessary local configuration to resolve the custom domain.**\
+⚠️ **Necessary local configuration to resolve the custom domain.**
+
 Next, we need to add our local domain to our local hosts file to resolve the custom domain in our browser. For this, you need to add the localhost IP (`127.0.0.1`) to your `/etc/hosts` file on your machine.
 
 Enter your machine password and open the hosts file.
@@ -222,9 +223,8 @@ Add, at the end of the file, the following line.
 # docker
 127.0.0.1       example.kitt api.example.kitt
 ```
-⚠️ **End: Necessary local configuration to resolve the custom domain.**
 
-Afterwards, your folder/file structure should look like this.
+Afterward, your folder/file structure should look like this.
 ```text
 /example
 ├── .env
@@ -241,11 +241,11 @@ Afterwards, your folder/file structure should look like this.
 
 ### MySQL
 
-Before we can go ahead and configure the backend system, it is necessary to set the permissions for our database user. Open your (downloaded) Docker application and run `docker compose up` in your terminal.
+Before we can go ahead and configure the backend system, it is necessary to set the permissions for our database user. Open/Start your (downloaded) Docker application and call `docker compose up` in a terminal window.
 ```shell
 docker compose up
 ```
-After all necessary packages are installed and the containers are running, connect to the MySQL container.
+After all necessary packages are installed and the containers are running, open a new terminal window and connect to the MySQL container.
 ```shell
 docker exec -it wp-mysql bash
 ```
@@ -266,11 +266,13 @@ Logout.
 quit
 ```
 
+Cancel the connection to the MySQL container by pressing `ctrl + P` and `ctrl + Q`. Close the new terminal window so that we have only one window again, where the containers are running.
+
 ## Configure WordPress
 
-Finally, we can start to configure WordPress and dive into the interesting part to start working with our new custom WordPress theme. But before we start and try to access the `api.example.kitt` domain to open the backend system, we will go one step back. This means stop the running container with `ctrl + C`.
+Finally, we can start to configure the WordPress backend system and dive into the interesting part to start working with our new custom WordPress theme. But before we start and try to access the `api.example.kitt` domain to open the backend system, we will go one step back. This means stopping the running containers with ctrl + C inside of the terminal window.
 
-After the containers are stopped we need to set up the `.env` file. Update the following values.
+After the containers are stopped we need to set up the `.env` file. Please update the following values.
 
 #### .env
 ```shell
@@ -298,11 +300,11 @@ SMTP_FROM="your@username.com"
 SMTP_FROMNAME="WordPress"
 ```
 
-Now, it is necessary to rebuild the containers.
+Now, it is necessary to rebuild the containers. Call the following command.
 ```shell
 docker compose build
 ```
-Afterwards, we will run the new containers.
+Afterward, we will run the new containers.
 ```shell
 docker compose up
 ```
@@ -322,11 +324,11 @@ Confirm use of weak password => check
 Your Email => your@email.com
 Search engine visibility => check
 ```
-Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to adjust two things. First of all, activate your new custom theme, you'll find it under `Appearence`. The second thing is to create a **REST-API user**. Go to `Users` and create a user with the credentials of our `.env` file. In this case, it is important to set the **`Username === REST_USER`** and the **`Password === admin`**. Don't forget to set the **`Role === REST API User`**.
+Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to adjust two things. First of all, activate your new custom theme, you'll find it under `Appearance`. The second thing is to create a **REST-API user**. Go to `Users` and create a user with the credentials of our `.env` file. In this case, it is important to set the **`Username === REST_USER`**, the **`Password === admin`**, and the **`Role === REST API User`**.
 
 ## The Front-End
 
-Let's dive into the front-end directory `./web/app/themes/example/` and configure the last part for WordPress. I'll take some parts of the snippets from the `example.functions.php` file to handle some configurations.
+Let's dive into the front-end directory `./web/app/themes/example` and configure the last part for WordPress. I'll take some parts of the snippets from the `example.functions.php` file to handle some configurations. Please add the following lines below inside of the `functions.php` file.
 
 #### functions.php / theme configuration
 ```PHP
@@ -485,7 +487,7 @@ $kitt_instance->menu([
 
 ### REST-API
 
-In this example we want to use the REST API to make requests to the backend system, that's why we have also to configure it. Please, add the following snippet for it.
+In this example project we want to use the REST API to get some data from the backend system that's why we have also to configure it. Please add the following snippet for it.
 
 #### functions.php / REST-API configuration
 ```PHP
@@ -521,11 +523,11 @@ $kitt_instance->REST_API([
 ]);
 ```
 
-As you can see, I set the `Access-Control-Allow-Origin` header only to `WP_HOME`, this means that request are only allowed from `example.kitt`. This is important because we don't want that other websites can access the data. The namespace is set to `example` by `explode('.', parse_url(WP_HOME)['host'])[0]`, so if you want to make request to the REST-API you need to call `api.example.com/wp-json/example/endpoint`.
+As you can see, I set the `Access-Control-Allow-Origin` header to `WP_HOME`, this means that requests are only allowed from `example.kitt`. This is important because we don't want, that other websites can access the data. The namespace is set to `example` by `explode('.', parse_url(WP_HOME)['host'])[0]`, so if you want to make requests to the REST-API you need to call `api.example.com/wp-json/example/endpoint`.
 
 ### JWT Token Handling
 
-Obviously we need a token for each request. To retrieve a token we will add now a small snippet to the `functions.php` file. Let's extend the configuration instance and add a new endpoint and callback function to handle this stuff.
+Obviously, we need a token for each request. To retrieve a token we will add now a small snippet to the `functions.php` file. Let's extend the instance and add a new endpoint and a callback function to handle this stuff.
 
 #### functions.php / adding REST-API endpoint
 ```PHP
@@ -585,11 +587,11 @@ $kitt_instance->get_token = function () {
 };
 ```
 
-What have we done? We added a new endpoint to `$kitt_instance->rest_routes` which is callable with `token` (`api.example.com/wp-json/example/token`). The method is set to `GET` by `\WP_REST_Server::READABLE`. Every endpoint needs a permission callback. With the [**WordPress Theme Configuration**](https://github.com/dark-kitt/wordpress-theme-configuration) plugin it is only possible to set the permission to `rest_api_user` (protected) or like in our case now `__return_true` (public). Afterwards it is necessary to handle the request by a callback function, that is defined below. You can also add some arguments in the last array, but in our case it it not necessary.
+What have we done? We added a new endpoint to `$kitt_instance->rest_routes` which is callable with `token` (`api.example.com/wp-json/example/token`). The method is set to `GET` by `\WP_REST_Server::READABLE`. Every endpoint needs a permission callback. With the [**WordPress Theme Configuration**](https://github.com/dark-kitt/wordpress-theme-configuration) plugin, it is only possible to set the permission to `rest_api_user` (protected) or like in our case `__return_true` (public). Afterward, it is necessary to handle the request by a callback function, which is defined under the `$kitt_instance->rest_routes` configuration. You can also add some arguments in the last array, but in our case, it is not necessary.
 
 ### PHPMailer
 
-If you have entered email configurations in the `.env`file before you can add the following snippet to configure PHPMailer, othwise you can ignore this step. Just add the snippet below and test the endpoint by calling a request to `api.example.com/wp-json/example/email`. Afterwards you should recieve an email to your account by yourself.
+If you have entered email configurations in the `.env` file before, you can add the following snippet to configure PHPMailer, otherwise, you can ignore this step. Just add the snippet below and test the endpoint by calling a request to `api.example.com/wp-json/example/email`. Afterward, you should receive an email to your account by yourself.
 
 #### functions.php / PHPMailer configuration
 ```PHP
@@ -628,7 +630,7 @@ $kitt_instance->rest_routes['email']['args']['add_address'] = ['default' => [[
 
 ### Add the output
 
-As described before this example project used the second option to handle the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)". So we need to add the output files to the DOM by WordPress. Let's add another snippet but this time we will open and edit the `index.php` file.
+As described before this example project used the second option to handle the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)". So we need to add the output files to the DOM by WordPress. Let's add another snippet. At this time, we will open and edit the `index.php` file.
 
 #### index.php / enqueue scripts and styles
 ```PHP
@@ -658,9 +660,9 @@ add_action('wp_enqueue_scripts', function () {
 });
 ```
 
-As you can see I create a manifest.json file inside of the output directory (`/www`) and read and enqueue all scripts and styles that are listed in the json file. Each file has an ID, in this case I was remove the hash to have a readable ID name. I was also creating an exception for the `main.bundle.js` file, that WordPress includes this file always in the end of the DOM.
+As you can see, I create a manifest.json file inside of the output directory (`/www`) and read and add all scripts and styles that are listed in the JSON file. It is required to add an ID for each file, so, I remove the hash to have a readable ID name. I also create an exception for the `main.bundle.js` file, that this file is always included at the end of the DOM.
 
-The last point is to request a token and hand over it to the front-end system. I created just a global constant.
+The last point is to request a token and hand over it to the front-end system. For this, I created just a global constant.
 
 ```PHP
 <script>
@@ -668,7 +670,7 @@ const TOKEN_DATA = <?= json_encode($kitt_instance->get_token()->data, JSON_PRETT
 </script>
 ```
 
-So in the end my `index.php` file is looking like this.
+So, in the end, my `index.php` file is looking like this.
 
 #### index.php
 ```PHP
@@ -712,12 +714,12 @@ const TOKEN_DATA = <?= json_encode($kitt_instance->get_token()->data, JSON_PRETT
 <?php get_footer(); ?>
 ```
 
-Ok, that was a long line of code and instruction, but now you are done! Just start the front-end system by calling `yarn dev` and create the necessary output to make our example project visible at `example.kitt`.
+Ok, that was a lot of instruction, but now you are done! Just start the front-end system by calling `yarn dev` and create the necessary output to make our example project visible at `example.kitt`.
 
 ```shell
 yarn dev
 ```
 
-Now it is up to you. Be creative and start coding your own custom front-end system, which is able to fetch data from the backend system. Just place your scipts and styles inside of the `/src` directory.
+Now it is up to you. Be creative and start coding. Just place your scripts and styles inside of the `/src` directory and create your own custom front-end system.
 
 **Happy coding!**
