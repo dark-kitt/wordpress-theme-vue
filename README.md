@@ -723,3 +723,10 @@ yarn dev
 Now it is up to you. Be creative and start coding. Just place your scripts and styles inside of the `/src` directory and create your own custom front-end system.
 
 **Happy coding!**
+
+---
+---
+
+## License
+
+[![](https://upload.wikimedia.org/wikipedia/commons/e/e5/CC_BY-SA_icon.svg)](https://creativecommons.org/licenses/by-sa/4.0)
