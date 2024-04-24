@@ -5,29 +5,29 @@ Project: [Part 1](https://github.com/dark-kitt/wordpress-boilerplate/tree/main),
 
 ## Introduction
 
-This is an example Vue/TypeScript project with Webpack, based on [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) and [**Part 2**](https://github.com/dark-kitt/wordpress-theme-configuration) of the WordPress Boilerplate, which can be used to create a custom WordPress theme.
+This is an example **Vue/TypeScript** project bundled with Webpack, based on [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) and [**Part 2**](https://github.com/dark-kitt/wordpress-theme-configuration) of the WordPress Boilerplate, which can be used to create a custom WordPress theme.
 
-You can work with the WordPress backend system in two different ways. The first way would be to separate both systems from each other so that you have a headless backend with an unattached front-end system. The second way would be to use both systems together for an "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)" so that you are still able to use the PHP files from WordPress and hydrate dynamic Vue components inside of your DOM structure.
+You can work with the **WordPress** backend system in two different ways. The first way would be to separate both systems from each other so that you have a **headless backend** with an unattached front-end system. The second way would be to use both systems together for an "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)" so that you are still able to use the **PHP** files from WordPress and **hydrate dynamic Vue** components inside of your DOM structure.
 
 In my case, I used the second option and configured all the necessary stuff to make it usable for the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)", but it's easy to modify the project to handle the first way and separate both systems. Just install the [HtmlWebpackPlugin](https://webpack.js.org/plugins/html-webpack-plugin/), and a template engine like [Handlebars](https://handlebarsjs.com/) to render the output. Afterward, it's just necessary to modify the Webpack and the Apache configuration.
 
 ### Requirements
 
-* [Yarn: ^1.*](https://yarnpkg.com/)
+* [Yarn: ^1.*](https://yarnpkg.com/) || [npm: 10.*](https://npmjs.com/)
 
 Install all necessary packages.
 ```shell
-yarn
+yarn || npm i
 ```
 
 For development mode.
 ```shell
-yarn dev
+yarn dev || npm run dev
 ```
 
 For production mode.
 ```shell
-yarn prod
+yarn prod || npm run prod
 ```
 
 As described before I create only the output for the "[**Islands Architecture**](https://www.patterns.dev/vanilla/islands-architecture)", which means that you only see the JS, the CSS, and the necessary assets files inside of the (`/www`) output directory. So, the output must be included with PHP, e.g. by WordPress with [**wp_enqueue_script**](https://developer.wordpress.org/reference/functions/wp_enqueue_script/).
@@ -36,7 +36,7 @@ As described before I create only the output for the "[**Islands Architecture**]
 
 # Getting started!
 
-I guess the best way to get the idea behind is to set up an example project together. The following example is based on a macOS system, but it could be possible, with some troubleshooting, that it will also work on Windows.
+I guess the best way to understand the project is to create an example project together. The following instructions are based on a macOS system, but it could be possible, with some troubleshooting, that it will also work on Windows.
 
 As always, let's create a folder and change the directory.
 ```shell
@@ -44,11 +44,11 @@ mkdir example && cd example
 ```
 ## Set up the environment
 
-Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate download the project as ZIP, and open and copy-paste the composer.json file into your project root directory (`/example`). If you have a GitHub account and want to fetch the file by **curl** you can use the following snippet.
+Keep it simple as it is. Go to [**Part 1**](https://github.com/dark-kitt/wordpress-boilerplate/tree/main) of the WordPress Boilerplate download the project as ZIP, and open and copy-paste the composer.json file in your project root directory (`/example`). If you have a GitHub account and want to fetch the file by **curl** you can use the following command.
 
 #### composer.json
 ```shell
-curl --header "PRIVATE-TOKEN: <your_github_access_token>" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
+curl --header "PRIVATE-TOKEN: <github_access_token>" "https://raw.githubusercontent.com/dark-kitt/wordpress-boilerplate/main/composer.json" > composer.json
 ```
 
 Or save your private access token in a curl header file, e.g. `~/.curl/github`, and include your specific header in your command.
@@ -105,7 +105,6 @@ services:
     image: mysql:8.0
     environment:
       MYSQL_ROOT_PASSWORD: ro_password
-      MYSQL_DATABASE: db_test
       MYSQL_USER: db_user
       MYSQL_PASSWORD: db_password
     ports:
@@ -207,7 +206,7 @@ RUN pecl install xdebug \
 </VirtualHost>
 ```
 
-As you can see we deny the access for the `./web/app/themes/example/config` directory. This is important because we need a save area to configure our project front-end. But there is also another way to do it. If you don't prefer to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file that includes `Deny from all` inside of the `./web/app/themes/example/config` directory.
+As you can see we deny the access for the `./web/app/themes/example/config` directory in the **vhosts.conf** file. This is important because we need a save area to configure our front-end project. But there is also another way to do it. If you don't prefer to extend your Apache `vhosts.conf` file, you can also add a `.htaccess` file that includes `Deny from all` inside of the `./web/app/themes/example/config` directory.
 
 Afterward, your folder/file structure should look like this.
 ```text
@@ -245,7 +244,7 @@ Before we can go ahead and configure the backend system, it is necessary to set 
 ```shell
 docker compose up
 ```
-After all necessary packages are installed and the containers are running, open a new terminal window and connect to the MySQL container.
+After all necessary packages are installed and the containers are running, open another terminal window and connect to the MySQL container.
 ```shell
 docker exec -it wp-mysql bash
 ```
@@ -292,13 +291,13 @@ JWT_AUTH_CORS_ENABLE=true
 
 If you already have an email account that is usable for PHPMailer you can also set up the following values.
 ```shell
-SMTP_HOST="smtp.domain.com"
+SMTP_HOST="smtp.domain.com" // "smtp.gmail.com"
 SMTP_AUTH=true
 SMTP_PORT=587
 SMTP_SECURE="tls"
-SMTP_USERNAME="your@username.com"
-SMTP_PASSWORD="password"
-SMTP_FROM="your@username.com"
+SMTP_USERNAME="your@username.com" // "your@gmail.com"
+SMTP_PASSWORD="password" // your gmail password or app password
+SMTP_FROM="your@username.com" // "your@gmail.com"
 SMTP_FROMNAME="WordPress"
 ```
 
@@ -598,7 +597,7 @@ $kitt_instance->get_token = function () {
 };
 ```
 
-What have we done? We added a new endpoint to `$kitt_instance->rest_routes` which is callable with `token` (`api.example.com/wp-json/example/token`). The method is set to `GET` by `\WP_REST_Server::READABLE`. Every endpoint needs a permission callback. With the [**WordPress Theme Configuration**](https://github.com/dark-kitt/wordpress-theme-configuration) plugin, it is only possible to set the permission to `rest_api_user` (protected) or like in our case `__return_true` (public). Afterward, it is necessary to handle the request by a callback function, which is defined under the `$kitt_instance->rest_routes` configuration. You can also add some arguments in the last array, but in our case, it is not necessary.
+What have we done? We added a new endpoint to `$kitt_instance->rest_routes` which is callable with `token` (`api.example.com/wp-json/example/token`). The method is set to `GET` by `\WP_REST_Server::READABLE`. Every endpoint needs a permission callback. With the [**WordPress Theme Configuration**](https://github.com/dark-kitt/wordpress-theme-configuration) plugin, it is only possible to set the permission to `rest_api_user` (protected) or like in our case `__return_true` (public). Afterward, it is necessary to handle the request by a callback function, which is defined underneath the `$kitt_instance->rest_routes` configuration. You can also add some arguments in the last array, but in our case, it is not necessary.
 
 ### PHPMailer
 
@@ -728,6 +727,9 @@ const TOKEN_DATA = <?= json_encode($kitt_instance->get_token()->data, JSON_PRETT
 #### .env
 
 The last step is to create the `.env` file inside of the `/configs` theme directory. Please copy and paste the `.example.env` file inside of the `./web/app/themes/example/configs` directory.
+```shell
+cp ./configs/.example.env ./configs/.env
+```
 
 Ok, that was a lot of instructions, but now you are done! Just install all necessary packages with `yarn` and start the front-end system by calling `yarn dev`. Afterward, all the necessary output should be created inside of the `/www` directory to make our example project visible at `example.kitt`.
 
