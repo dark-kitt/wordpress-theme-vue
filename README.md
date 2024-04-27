@@ -331,7 +331,7 @@ Confirm use of weak password => check
 Your Email => your@email.com
 Search engine visibility => check
 ```
-Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to activate our new custom theme, you'll find it under `Appearance`.
+Press the button **`Install WordPress`**! And login as admin. Before we start to configure the theme, we need to activate our new custom theme, you'll find it under `Appearance`. Additionally, we need to activate all `plugins`, too.
 
 ## The Front-End
 
