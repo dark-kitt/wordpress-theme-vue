@@ -23,7 +23,21 @@ const module = {
     {
       test: /\.ts$/,
       loader: 'ts-loader',
+      exclude: /\/node_modules/,
       options: {
+        /**
+         * ts-loader can only type check post-transform code.
+         * This doesn't align with the errors we see in IDEs or from vue-tsc,
+         * which map directly back to the source code.
+         *
+         * We already have type checking running right in our IDE in a separate process,
+         * so the cost of dev experience slow down simply isn't a good trade-off.
+         * https://vuejs.org/guide/typescript/overview#note-on-vue-cli-and-ts-loader
+         *
+         * That's why we use in this case the transpileOnly option.
+         * https://github.com/TypeStrong/ts-loader?tab=readme-ov-file#transpileonly
+         */
+        transpileOnly: true,
         appendTsSuffixTo: [/\.vue$/]
       }
     },
