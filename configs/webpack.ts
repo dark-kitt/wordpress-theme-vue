@@ -19,12 +19,14 @@ const config: Configuration = {
   },
   resolve: {
     alias: {
+      '@': resolve(__dirname, '..', 'src'),
       '@modules': resolve(__dirname, '..', 'src', 'modules'),
       '@components': resolve(__dirname, '..', 'src', 'modules', 'components'),
       '@scripts': resolve(__dirname, '..', 'src', 'scripts'),
       '@styles': resolve(__dirname, '..', 'src', 'styles'),
       '@assets': resolve(__dirname, '..', 'src', 'assets'),
-      '@store': resolve(__dirname, '..', 'src', 'store')
+      '@store': resolve(__dirname, '..', 'src', 'store'),
+      '@i18n': resolve(__dirname, '..', 'src', 'i18n')
     },
     extensions: ['.js', '.vue', '.ts']
   },
