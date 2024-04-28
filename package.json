@@ -8,7 +8,9 @@
   "license": "MIT",
   "scripts": {
     "dev": "webpack --config ./configs/webpack.ts",
-    "prod": "webpack --config ./configs/webpack.ts --env WEBPACK_MODE=production"
+    "prod": "webpack --config ./configs/webpack.ts --env WEBPACK_MODE=production",
+    "type-check": "vue-tsc --noEmit",
+    "build-dts": "vue-tsc --declaration --emitDeclarationOnly"
   },
   "browserslist": [
     "defaults"
@@ -46,6 +48,7 @@
     "uglify-js": "^3.17.4",
     "vue-eslint-parser": "^9.4.2",
     "vue-loader": "^17.4.2",
+    "vue-tsc": "^2.0.14",
     "webpack": "^5.91.0",
     "webpack-assets-manifest": "^5.2.1",
     "webpack-cli": "^5.1.4"
