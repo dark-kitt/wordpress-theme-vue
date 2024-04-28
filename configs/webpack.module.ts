@@ -78,10 +78,25 @@ const module = {
     },
     {
       test: /\.(jpg|png|gif|svg|woff(2)|ttf|eot|pdf)$/,
+      resourceQuery: { not: [/raw/] },
       type: 'asset/resource',
       generator: {
         filename: chunk => chunk.filename.replace('src/', '')
       }
+    },
+    {
+      /**
+       * Previously achievable by using raw-loader
+       *
+       * import raw SVG file structure by using
+       * the ?raw query to inline the source object
+       *
+       * e.g.
+       * import SVG from 'path/to/icon.svg?raw'
+       */
+      test: /\.svg$/,
+      resourceQuery: /raw/,
+      type: 'asset/source'
     }
   ]
 };
