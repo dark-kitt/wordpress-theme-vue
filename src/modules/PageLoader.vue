@@ -56,7 +56,7 @@ store.watch(
       pageLoader.value.style.display = 'block';
       pageLoader.value.style.zIndex = '10';
       startAnimation();
-      // animation delay necessary
+      // necessary animation delay
       setTimeout(() => {
         pageLoader.value.style.opacity = '1';
       }, 100);
