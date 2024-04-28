@@ -14,11 +14,9 @@ import api, { ApiTypes } from './modules/api';
 // register store modules
 store.registerModule('api', api);
 
-// declare store state types
-declare module '@store' {
-  interface State extends StateTypes {
-    api: ApiTypes;
-  }
+// declare store modules state types
+export interface State extends StateTypes {
+  api: ApiTypes;
 }
 
 export default store;
