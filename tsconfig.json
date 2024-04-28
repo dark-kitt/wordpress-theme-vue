@@ -12,17 +12,29 @@
     "baseUrl": ".",
     "outDir": "src/@types",
     "paths": {
+      "@/*": [
+        "src/*",
+        "src/*/index.ts"
+      ],
       "@scripts/*": [
-        "src/scripts/*"
+        "src/scripts/*",
+        "src/scripts/*/index.ts"
       ],
       "@modules/*": [
-        "src/modules/*"
+        "src/modules/*",
+        "src/modules/*/index.vue"
       ],
       "@components/*": [
-        "src/modules/components/*"
+        "src/modules/components/*",
+        "src/modules/components/*/index.vue"
       ],
       "@store/*": [
-        "src/store/*"
+        "src/store/*",
+        "src/store/*/index.ts"
+      ],
+      /** to prevent: Cannot find module '@store' or its corresponding type declarations. ts-plugin(2307) */
+      "@store": [
+        "src/store/index.ts"
       ]
     },
     "lib": [
