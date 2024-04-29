@@ -1,4 +1,12 @@
 {
-    "name": "dark-kitt/wordpress-theme-vue",
-    "type": "wordpress-theme"
+  "name": "dark-kitt/wordpress-theme-vue",
+  "description": "A base Vue.js theme for WordPress",
+  "type": "wordpress-theme",
+  "license": "CC-BY-4.0",
+  "authors": [
+    {
+      "name": "dark-kitt"
+    }
+  ],
+  "minimum-stability": "dev"
 }
