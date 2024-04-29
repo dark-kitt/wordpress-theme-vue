@@ -15,7 +15,39 @@ In my case, I used the second option and configured all the necessary stuff to m
 
 * [Yarn: ^1.*](https://yarnpkg.com/) || [npm: 10.*](https://npmjs.com/)
 
-Install all necessary packages.
+## Installation
+```shell
+composer require dark-kitt/wordpress-theme-vue
+```
+
+If you have a specific path to your `/themes` directory, please add the following lines to your composer.json file.
+```json
+"extra": {
+  "installer-paths": {
+    "path/to/themes/{$name}/": [
+      "type:wordpress-theme"
+    ]
+  },
+  "wordpress-install-dir": "path/to/wordpress"
+},
+```
+
+**common composer cmds**
+```shell
+composer install
+composer update
+# package control
+composer require verdor/package
+composer remove verdor/package
+
+composer clear-cache
+composer show -i # installed packages
+```
+
+
+## Quick start
+
+Install all necessary node modules.
 ```shell
 yarn || npm i
 ```
